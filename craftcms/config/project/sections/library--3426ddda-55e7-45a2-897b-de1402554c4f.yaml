@@ -1,0 +1,27 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  - 74c7e5de-4b47-4d5d-b4e3-cc228619242d # Pattern
+handle: library
+maxAuthors: 1
+name: Library
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  d34bee8e-bf22-451d-8339-a4342630833d: # Craft CMS
+    enabledByDefault: true
+    hasUrls: true
+    template: _site/library._entry.twig
+    uriFormat: '{% from ''_site/library._entry'' import uri %}{{ uri( object ) }}'
+type: channel

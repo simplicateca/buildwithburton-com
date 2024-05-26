@@ -1,0 +1,25 @@
+{% block fonts %}
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Hind+Guntur:wght@300;400;600&family=Oxygen&display=swap" rel="stylesheet">
+
+    {## To serve fonts locally, download fonts using: https://gwfh.mranftl.com/fonts,
+        upload to server (or CDN), edit and uncomment the lines below:
+
+        <style>
+            {{ _self.fontface( 'Rubik', 'Rubik', 800 ) }}
+            {{ _self.fontface( 'Roboto Mono', 'Roboto-Mono', 400 ) }}
+        </style>
+    {## ----------------------------------------------------------------------------- ##}
+{% endblock %}
+
+{% macro fontface( family, filename, weight ) %}
+    {% css alias( "@fonts/#{filename}.woff2" ) with { rel: "preload", as: "font", type: "font/woff2", crossorigin:"anonymous" } %}
+
+    @font-face {
+        font-family: '{{family}}';
+        src: url('{{ alias( '@fonts' ) }}/{{filename}}.woff2') format('woff2'),
+             url('{{ alias( '@fonts' ) }}/{{filename}}.woff') format('woff');
+        font-weight: {{weight}};
+        font-style: normal;
+        font-display: swap;
+    }
+{% endmacro %}

@@ -1,0 +1,82 @@
+{%- set name = name ??? 'Other' -%}
+
+[{
+    "value": "copyAbove",
+    "label": "Position Above {{ name }}",
+    "default" : true,
+    "tooltips": { "inline": "" },
+    "settings": {},
+    "virtuals": [
+        {{ block( 'eyebrowGroup', '_config/_virtuals' ) }}
+        {% if field ??? null == 'sidebarBuilder' %}
+            ,{
+                "type" : "select",
+                "name" : "textlayer",
+                "default": "default",
+                "label": "Typography",
+                "instructions": "Adjust text treatment.",
+                "options" : {
+                    "default": "Default",
+                    "knockout": "Knockout Box"
+                }
+            }
+        {% else %}
+            ,{{ block( 'copyLayoutFull',  '_config/_virtuals' ) }}
+            ,{
+                "type" : "select",
+                "name" : "textlayer",
+                "default": "default",
+                "label": "Typography",
+                "instructions": "Adjust overall text treatment.",
+                "fieldClass": "width-30",
+                "options" : {
+                    "default": "Default",
+                    "twocols": "Two Columns"
+                }
+            }
+            ,{{ block( 'headFootGroup',   '_config/_virtuals' ) }}
+        {% endif %}
+    ]
+},{
+    "value": "copyLeft",
+    "label": "Position Left of {{ name }}",
+    "tooltips": {
+        "inline": "Two column layout with Copy on the left and {{name}} content on the right"
+    },
+    "settings": {},
+    "virtuals": [
+        {{ block( 'eyebrowGroup', '_config/_virtuals' ) }}
+        {% if field ??? null != 'sidebarBuilder' %}
+            ,{{ block( 'copyLayoutLeft',  '_config/_virtuals' ) }}
+            ,{{ block( 'headFootGroup',   '_config/_virtuals' ) }}
+        {% endif %}
+    ]
+},{
+    "value": "copyRight",
+    "label": "Position Right of {{name}}",
+    "tooltips": {
+        "inline": "Two column layout with {{name}} content on the left and Copy on the right"
+    },
+    "settings": {},
+    "virtuals": [
+        {{ block( 'eyebrowGroup', '_config/_virtuals' ) }}
+        {% if field ??? null != 'sidebarBuilder' %}
+            ,{{ block( 'copyLayoutRight', '_config/_virtuals' ) }}
+            ,{{ block( 'headFootGroup',   '_config/_virtuals' ) }}
+        {% endif %}
+    ]
+},{
+    "value": "copyBelow",
+    "label": "Position Below {{name}}",
+    "tooltips": { "inline": "" },
+    "settings": {
+        "microlayout": "zone1Bottom"
+    },
+    "virtuals": [
+        {{ block( 'eyebrowGroup', '_config/_virtuals' ) }}
+        {% if field ??? null != 'sidebarBuilder' %}
+            ,{{ block( 'copyLayoutFull',  '_config/_virtuals' ) }}
+            ,{{ block( 'headFootGroup',   '_config/_virtuals' ) }}
+        {% endif %}
+    ]
+}]

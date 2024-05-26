@@ -1,0 +1,62 @@
+{## Pattern Library Entry
+{-------------------------------------------------------------------------------------##}
+{% extends entry.type.handle ??? null
+    ? "_site/template.fullpage"
+    : template_from_string('{% block unknown "" %}') %}
+
+
+{% block content %}
+
+    {% set source = entry.source.value ?? null %}
+
+    {## Named Variant Block or Fallback
+    {---------------------------------------------------------------------------------##}
+    {%- set blockname = "source__#{source}" -%}
+    {{- ( block( blockname ) is defined )
+        ? block( blockname )
+        : block( 'source__fallback' ) -}}
+
+    {% set text %}
+        <h2>Neminem videbis</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit Tollenda est atque extrahenda <strong>radicitus prima</strong> illa, quae in congressu Non autem igitur ne illud quidem.</p>
+    {% endset %}
+
+    {% set settings = {
+        microlayout: 'zone1Left',
+        theme: 'base'
+    } %}
+
+{% endblock %}
+
+{% block source__fallback "" %}
+
+
+{% block source__image %}
+
+    {% embed "_core/block.image" with {
+        block: { text: text, images: [] },
+        settings: settings
+    } %}{% endembed %}
+
+{% endblock %}
+
+
+
+{## Library Pattern Entry URI Generator
+{---------------------------------------------------------------------------------------}
+    Often easier than trying to cram a bunch of conditional twig logic into the tiny
+    space provided by the URI Format field in the control panel.
+
+    However, you do need to trigger a manual resave of all entries if you change
+    the URI sturcture in the below macro for existing records.
+
+    {% from '_site/pages._entry' import uri %}{{ uri( object ) }}
+{-------------------------------------------------------------------------------------##}
+{% macro uri( entry ) %}{% apply spaceless %}
+    {{ [entry.source.value, entry.slug] | filter | join('/') }}
+{% endapply %}{% endmacro %}
+
+
+{% block unknown %}
+    {% header "HTTP/1.0 404 Not Found" %}
+{% endblock %}

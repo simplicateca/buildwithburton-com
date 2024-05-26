@@ -1,0 +1,135 @@
+[{
+    "value": "articles",
+    "label": "Articles",
+    "tooltips": {
+        "inline" : "Articles + Blog Posts"
+    },
+    "settings": {
+        "with": ["images", "taxonomies", "users"],
+        "where": {
+            "type": ["article"]
+        }
+    },
+    "virtuals": [{
+        "type" : "select",
+        "name" : "sort",
+        "label": "Default Sorting",
+        "default": "recent",
+        "instructions": "Unless otherwise overridden",
+        "options": [{
+            "value": "recent",
+            "label": "Most Recent",
+            "orderby": "postDate DESC"
+        },{
+            "value": "alpha",
+            "label": "Alphabetically",
+            "orderby": "title ASC"
+        },{
+            "value": "random",
+            "label": "Random",
+            "orderby": "RAND()"
+        }]
+    },{
+        "type" : "date",
+        "name" : "before",
+        "label": "On or Before",
+        "fieldClass": "width-25",
+        "instructions": "Exclude newer"
+    },{
+        "type" : "date",
+        "name" : "after",
+        "label": "On or After",
+        "fieldClass": "width-25",
+        "instructions": "Exclude older"
+    }]
+},{
+    "value": "pages",
+    "label": "Pages",
+    "settings": {
+        "with": ["images", "taxonomies"],
+        "where": {
+            "section": "pages"
+        }
+    },
+    "virtuals": [{
+        "type" : "select",
+        "name" : "decendants",
+        "label": "Levels of Decendants?",
+        "default": "1",
+        "instructions": "Children of the related page.",
+        "options": [{
+            "value": "1",
+            "label": "One (1) Level Deep"
+        },{
+            "value": "2",
+            "label": "Two (2) Levels Deep"
+        }]
+    },{
+        "type" : "lightswitch",
+        "name" : "usecurrent",
+        "value": "yes",
+        "label": "Allow Dynamic Relationship?",
+        "instructions": "Use the ‘current page’ as the parent if none provided?"
+    }]
+},{
+    "value": "topics",
+    "label": "Topics",
+    "settings": {
+        "with": ["images"],
+        "where": {
+            "type": "topic",
+            "section": "taxonomy"
+        }
+    }
+},{
+    "value": "sitesearch",
+    "label": "Public Facing Content",
+    "tooltips": {
+        "inline" : "Articles + Pages + Topics"
+    },
+    "settings": {
+        "with": ["images", "taxonomies"],
+        "where": {
+            "type": "!= private",
+            "section": ["articles", "pages", "taxonomy"]
+        }
+    }
+},{
+    "value": "bits",
+    "label": "Content Bits",
+    "settings" : {
+        "with": ["images", "taxonomies"],
+        "where": {
+            "type": "bit"
+        }
+    }
+},{
+    "value": "embeds",
+    "label": "Embeddable External Media",
+    "settings" : {
+        "with": ["images", "taxonomies"],
+        "where": {
+            "type": "embed"
+        }
+    }
+},{
+    "value": "media",
+    "label": "Local Media Assets",
+    "settings" : {
+        "element": "asset",
+        "with": [],
+        "where": {
+            "kind": ["video","audio","compressed","pdf","excel","word"]
+        }
+    }
+},{
+    "value": "images",
+    "label": "Local Image Assets",
+    "settings" : {
+        "element": "asset",
+        "with": [],
+        "where": {
+            "kind": "image"
+        }
+    }
+}]

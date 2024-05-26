@@ -1,0 +1,76 @@
+{% set label  = label  ?? null  %}
+{% set handle = handle ?? null  %}
+{% set items  = items  ?? null  %}
+{% set menuid = menuid ?? "menu#{random()}" %}
+{% set tag    = tag    ?? 'nav' %}
+
+{% if handle ?? null and not items | length %}
+    {% set label = label ?? craft.navigation.getNavByHandle( handle ).name ?? null %}
+    {% set items = craft.navigation.nodes().handle( handle ).level(1).all() ?? [] %}
+{% endif %}
+
+{% block menu %}
+    {% block openNav %}
+        <{{ tag }} {{attr({
+            id  : menuid,
+            role: "navigation",
+            aria: { label: label }
+        })}}>
+    {% endblock %}
+
+    {% block beforeItems %}{% endblock %}
+
+    {% block openMenu %}
+        <ul class="{{ block( 'menuClass' ) }}">
+    {% endblock %}
+
+    {% block firstItem %}{% endblock %}
+
+    {% for node in items %}
+
+        {% block openItem %}
+            <li class="{{ ( node.children.one() ??? null ) ? 'children' : '' }}">
+        {% endblock %}
+
+        {% block item %}
+            {{ tag( 'a', {
+                href : node.url ??? null,
+                class: block('itemClass'),
+                html : "<span>#{node.title}</span>"
+            }) }}
+        {% endblock %}
+
+        {% block closeItem %}</li>{% endblock %}
+
+    {% endfor %}
+
+    {% block lastItem %}{% endblock %}
+
+    {% block closeMenu %}</ul>{% endblock %}
+
+    {% block closeNav %}</{{tag}}>{% endblock %}
+{% endblock %}
+
+{% if 0 %}
+    {% block menuClass %}
+        m-0
+        p-0
+        list-none
+        flex
+        items-center
+        gap-6
+        text-lg
+        no-underline
+    {% endblock %}
+
+    {% block itemClass %}
+        flex
+        flex-col
+        items-center
+        p-4
+        text-theme-link
+        underline-offset-2
+        hover:underline
+        hover:text-theme-link-tint
+    {% endblock %}
+{% endif %}

@@ -1,0 +1,13 @@
+[{
+    "value": "seamless",
+    "label": "Seamless",
+    "tooltips": { "inline": "" },
+    "settings": {},
+    "virtuals": []
+},{
+    "value": "interactive",
+    "label": "Interactive",
+    "tooltips": { "inline": "" },
+    "settings": {},
+    "virtuals": []
+}]

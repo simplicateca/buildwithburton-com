@@ -1,0 +1,8 @@
+columnSuffix: null
+handle: menu
+instructions: null
+name: Menu
+searchable: false
+translationKeyFormat: null
+translationMethod: none
+type: verbb\navigation\fields\NavigationField

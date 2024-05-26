@@ -1,0 +1,45 @@
+{## [Core Block] Code
+{---------------------------------------------------------------------------------------}
+  > http://localhost:8000/sitehub/blocks/code
+{-------------------------------------------------------------------------------------##}
+{%- extends [ "_site/block", "_core/block" ] -%}
+
+{%- import "_core" as assemble -%}
+
+
+{## Zone 2 Variant Routing
+{---------------------------------------------------------------------------------------}
+    This block will look for blocks name `code__<variant>` to use to render zone2.
+    If it doesn't find one, it will perform a basic render of code output.
+{-------------------------------------------------------------------------------------##}
+{% block block__zone2 -%}
+
+    {%- set settings = block.settings ?? settings ?? null -%}
+    {%- set settings = settings ?? null is iterable ? settings : {} -%}
+
+    {%- set settings = {
+        variant  : null,
+        codelayer: 'code',
+    } | merge( settings ) -%}
+
+
+    {## Named Variant Block or Default Layout
+    {---------------------------------------------------------------------------------##}
+    {%- set blockname = "code__#{settings.variant}" -%}
+    {{- ( block( blockname ) is defined )
+        ? block( blockname )
+        : block( 'code__fallback' ) -}}
+{%- endblock %}
+
+
+
+{## Fallback Renderer for Code Zone
+{-------------------------------------------------------------------------------------##}
+{% block code__fallback -%}
+{% if block.code ??? null -%}
+    {%- set settings = settings ?? block.settings ?? null -%}
+    {%- set settings = settings ?? null is iterable ? settings : {} -%}
+    {%- set settings = { codelayer: 'code' } | merge( settings ) -%}
+    {%- import "_core" as assemble -%}
+    {{- assemble.text( settings.codelayer, block.code, settings ) -}}
+{%- endif %}{% endblock %}

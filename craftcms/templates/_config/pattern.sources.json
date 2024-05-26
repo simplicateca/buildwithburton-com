@@ -1,0 +1,43 @@
+[{
+    "value": "image",
+    "label": "Image",
+    "tooltips": { "inline" : "" },
+    "settings": {},
+    "virtuals": []
+},{
+    "value": "media",
+    "label": "Media",
+    "tooltips": { "inline" : "" },
+    "settings": {},
+    "virtuals": []
+},{
+    "value": "text",
+    "label": "Text",
+    "tooltips": { "inline" : "" },
+    "settings": {},
+    "virtuals": []
+},{
+    "value": "card",
+    "label": "Card",
+    "tooltips": { "inline" : "" },
+    "settings": {},
+    "virtuals": []
+},{
+    "value": "layout",
+    "label": "Layout",
+    "tooltips": { "inline" : "" },
+    "settings": {},
+    "virtuals": []
+},{
+    "value": "divider",
+    "label": "Divider",
+    "tooltips": { "inline" : "" },
+    "settings": {},
+    "virtuals": []
+},{
+    "value": "theme",
+    "label": "Theme",
+    "tooltips": { "inline" : "" },
+    "settings": {},
+    "virtuals": []
+}]

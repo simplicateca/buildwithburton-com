@@ -1,0 +1,361 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer utilities {
+    [data-bodycopy] {
+        .larger  { font-size: 1.20em; }
+        .normal  { font-size: 1.00em; }
+        .smaller { font-size: 0.80em; }
+    }
+
+/** Utility class for making a parent element (card) clickable without resorting to
+    wrapping the card in it's own <a> tag, using multiple tags, or onclick events.
+    Make sure the parent element has class='relative' or .. you know ..  **/
+    .click__cover {
+        &::before {
+            @apply absolute content-[""] inset-0 z-50;
+        }
+    }
+}
+
+
+/** Base Site Styles
+/---------------------------------------------------------------------------------------/
+    1. Block Themes
+    2. Form Controls
+    3. Typography
+      - Body Copy (p, ul, ol, blockquote)
+      - Headlines
+      - Buttons & Links
+/-------------------------------------------------------------------------------------**/
+
+
+/** 1. Block Themes
+/-------------------------------------------------------------------------------------**/
+[data-theme] {
+    @apply text-theme-bodycopy;
+    &.canvas, .canvas { @apply bg-theme; }
+    &.autospace { @apply py-16; }
+
+    [data-canvas] {
+        @apply bg-theme absolute inset-0 z-0;
+    }
+
+    &[data-coverage=container] {
+        @apply relative xl:p-4 @4xl:p-12;
+
+        [data-canvas] {
+            @apply bg-theme absolute -inset-4 z-0 rounded-xl border-theme-tint border-2 shadow-2xl;
+        }
+    }
+
+    &[data-coverage=twozone] {
+        @apply relative;
+
+        [data-zone] {
+            @apply relative z-20;
+        }
+
+        [data-canvas] {
+            @apply bg-theme absolute -inset-4 z-0 rounded-xl border-theme-tint border-2 shadow-2xl;
+        }
+    }
+}
+
+
+
+/** 2. Form Controls
+/-------------------------------------------------------------------------------------**/
+select,
+textarea,
+input[type="money"],
+input[type="number"],
+input[type="text"],
+input[type="search"],
+input[type="password"],
+input[type="email"] {
+    @apply
+        bg-theme-tint
+        text-theme-bodycopy
+        p-2.5
+        border
+        border-theme-tint
+        rounded-lg
+    ;
+}
+
+
+input[type=radio].sr-only:checked + label {
+    @apply
+        bg-theme-accent
+        text-theme-accent-alt
+        cursor-default
+    ;
+}
+
+
+
+/** 3. Typography
+/---------------------------------------------------------------------------------------/
+    This stylesheet makes use of the Tailwind Container Query plugin. It introduces the
+    `@container` class to mark parent elements as a responsive container "viewport".
+    It also introduces new container-based responsive prefixes: @xs:, @sm:, @md:, etc.
+
+    These new prefixes work exactly like the core responsive prefixes (sm:/lg:/2xl:etc),
+    only using the parent container with for making adjustments, not the device width.
+
+ -> https://tailwindcss.com/docs/plugins#container-queries
+/-------------------------------------------------------------------------------------**/
+
+
+/** 3.1 Body Text ----------------------------------------------------------------------/
+
+    Use `data-bodycopy` as an attribute on parent elements containing text that comes
+    from a CKEditor / Redactor field. This allows a consistent style to be applied to
+    <HtmlFieldData> text without crashing into other styles for common html elements.
+
+/**-----------------------------------------------------------------------------------**/
+/* p, ul, ol, blockquote {
+    @apply font-body leading-relaxed text-theme-bodycopy;
+} */
+
+[data-bodycopy] {
+    @apply
+        font-body
+        text-theme-bodycopy;
+
+    p, ul, ol, blockquote {
+        @apply
+            text-sm        @4xs:text-base     @md:text-lg       @xl:text-xl       @3xl:text-2xl      @5xl:text-3xl
+            leading-tight  @4xs:leading-snug  @md:leading-snug  @xl:leading-snug  @3xl:leading-snug  @5xl:leading-normal
+            mb-3           @4xs:mb-4          @md:mb-6          @xl:mb-8          @3xl:mb-10         @5xl:mb-12;
+    }
+
+    /* a little extra spacing before headers that appear after body text */
+    p+h2, ul+h2, ol+h2, blockquote+h2,
+    p+h3, ul+h3, ol+h3, blockquote+h3,
+    p+h4, ul+h4, ol+h4, blockquote+h4,
+    p+.like-h2, ul+.like-h2, ol+.like-h2, blockquote+.like-h2,
+    p+.like-h3, ul+.like-h3, ol+.like-h3, blockquote+.like-h3,
+    p+.like-h4, ul+.like-h4, ol+.like-h4, blockquote+.like-h4 {
+        @apply
+            mt-6      @4xs:mt-8        @md:mt-12     @xl:mt-16     @3xl:mt-20      @5xl:mt-24;
+    }
+
+    /** This is a pretty hack way to do two columns, but it gets the point across. It could
+        be better, especially if Tailwind Container Queries understood CSS columns. **/
+    div.columns-2 p {
+        @apply !text-base !mb-4 @xl:!text-lg @xl:!mb-6 @3xl:!text-xl @3xl:!mb-8 @5xl:!text-2xl @5xl:!mb-10;
+    }
+
+
+    /** basic list layout options **/
+    ol, ul {
+
+        /** plain <ul> **/
+        &:not(ul):not(.checklist):not(.columnlist):not(.rowlist) {
+            @apply list-decimal pl-[2em];
+        }
+
+        /** plain <ol> **/
+        &:not(ol):not(.checklist):not(.columnlist):not(.rowlist) {
+            @apply list-disc pl-[1em] pr-[2em];
+        }
+
+        /** checkmark list **/
+        &.checklist {
+            @apply ml-6;
+            list-style-image: url("data:image/svg+xml,<svg width='16' height='16' fill='none' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='m8.5 16.586-3.793-3.793a1 1 0 0 0-1.414 1.414l4.5 4.5a1 1 0 0 0 1.414 0l11-11a1 1 0 0 0-1.414-1.414L8.5 16.586Z' fill='%23333333'/></svg>");
+
+            li { @apply mb-3; }
+        }
+
+        /** two column list **/
+        &.columnlist {
+            @apply grid grid-cols-1 gap-5 @lg:grid-cols-2;
+        }
+
+        /** row list with separator lines **/
+        &.rowlist {
+            @apply grid grid-cols-1 items-center justify-center;
+
+            li {
+                @apply max-w-2xl border-b border-theme-tint2 p-4 mx-auto my-0 text-center;
+                &:last-of-type { @apply border-0; }
+            }
+        }
+    }
+
+    blockquote {
+        @apply bg-theme-tint p-4 @xl:p-10;
+    }
+
+    mark {
+        @apply inline-block relative ;
+
+        &.highlight {
+            span { @apply relative z-10; }
+            &::before {
+                  @apply bg-theme-highlight content-[""] absolute bottom-1 -translate-y-1/3 top-1/2 -inset-x-0.5 z-0;
+            }
+          }
+
+          &.nowrap {
+            span { @apply whitespace-nowrap; }
+          }
+    }
+}
+
+/** Removing the bottom margin on the last element inside one of these blocks is almost
+    always a good thing to help alignment with other elements and reduce large gaps. **/
+.last-child-mb-0,
+[data-bodycopy][class*="@container"],
+[data-bodycopy] .\@container {
+    & > h1:last-child,
+    & > h2:last-child,
+    & > h3:last-child,
+    & > h4:last-child,
+    & > p:last-child,
+    & > ol:last-child,
+    & > ul:last-child,
+    & > blockquote:last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
+
+/** 3.2 Headlines **********************************************************************/
+
+h1,h2,h3,h4,h5,h6,
+.like-h1,.like-h2,.like-h3,.like-h4,.like-h5,.like-h6 {
+    @apply
+        font-headline
+        font-extrabold
+        text-theme-headings;
+
+    strong {
+        @apply
+            text-theme-accent/70;
+    }
+
+    &.knockout {
+        @apply
+            bg-theme-accent
+            text-theme-accent-alt
+            py-3
+            px-5
+            inline-table
+            text-center;
+     }
+}
+
+h1, .like-h1 {
+    @apply
+        font-display
+        text-xl        @4xs:text-2xl      @xs:text-4xl      @lg:text-5xl      @2xl:text-6xl       @4xl:text-7xl       @6xl:text-8xl
+        leading-none   @4xs:leading-none  @xs:leading-taut  @lg:leading-taut  @2xl:leading-tight  @4xl:leading-tight  @6xl:leading-snug
+        mb-4      @4xs:mb-6       @md:mb-10       @3xl:mb-14;
+
+    /** a little less gap if immediately followed by <h2> **/
+    &+h2, &+.like-h2 { @apply -mt-2.5; }
+}
+
+h2, .like-h2 {
+    @apply
+        text-lg        @4xs:text-xl       @xs:text-3xl      @lg:text-4xl      @2xl:text-5xl       @4xl:text-6xl       @6xl:text-7xl
+        leading-none   @4xs:leading-none  @xs:leading-taut  @lg:leading-taut  @2xl:leading-tight  @4xl:leading-tight  @6xl:leading-snug
+        mb-4      @4xs:mb-6       @md:mb-10       @3xl:mb-14;
+    ;
+
+    /** a stylish underline :) **/
+    /* relative pb-4 */
+    position: relative;
+    padding-bottom: 1rem;
+    &:after { @apply bg-theme-highlight absolute content-[''] block w-16 h-1 -bottom-1; }
+    &[class*="text-center"]:after { transform: translateX(-50%); left:50%; width: 10rem; }
+    &[class*="text-right"]:after  { right: 0rem; }
+
+    /** a little less gap if immediately followed by <h3> **/
+    &+h3, &+.like-h3 { @apply -mt-2.5; }
+}
+
+h3, .like-h3 {
+    @apply
+        text-base      @4xs:text-lg       @xs:text-2xl      @lg:text-3xl      @2xl:text-4xl       @4xl:text-5xl       @6xl:text-6xl
+        leading-none   @4xs:leading-none  @xs:leading-taut  @lg:leading-taut  @2xl:leading-tight  @4xl:leading-tight  @6xl:leading-snug
+        mb-4    @4xs:mb-5    @md:mb-8    @3xl:mb-10;
+
+    /** a little less gap if immediately followed by <h4> **/
+    &+h4, &+.like-h4 { @apply -mt-2.5; }
+}
+
+h4, .like-h4 {
+    @apply
+        text-sm        @4xs:text-base     @xs:text-xl       @lg:text-2xl      @2xl:text-3xl       @4xl:text-4xl       @6xl:text-5xl
+        leading-none   @4xs:leading-none  @xs:leading-taut  @lg:leading-taut  @2xl:leading-tight  @4xl:leading-tight  @6xl:leading-snug
+        mb-3      @4xs:mb-4       @md:mb-6        @3xl:mb-8;
+
+    /** a little less gap if immediately followed by <p>, <ul>. <ol> **/
+    &+p, &+ul, &+ol { @apply -mt-2.5; }
+}
+/**-----------------------------------------------------------------------------------**/
+
+
+/** 3.2 Buttons & Links ****************************************************************/
+
+/** The `data-only-links` attribute gets added to a bodycopy parent container
+    if that element ONLY contains links (which is typical of call-to-action sections).
+    Here, we're targetting bodycopy links that are NOT inside a `data-only-links`
+    parent, which should be all other types of inline textual links. **/
+[data-bodycopy] :not([data-only-links]) a {
+    @apply
+        underline
+        underline-offset-2
+        hover:no-underline
+        focus:underline-offset-4
+
+        text-theme-link
+        hover:text-theme-link-tint
+        focus:text-theme-link-tint
+    ;
+}
+
+/** Links inside header tags **/
+h1,h2,h3,h4,h5,h6, .like-h1,.like-h2,.like-h3,.like-h4,.like-h5,.like-h6 {
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+/** Simple. unassuming button **/
+.button {
+    @apply
+        py-3
+        px-4
+        border-2
+        bg-theme
+        rounded-lg
+        transition
+        inline-block
+        border-theme-accent-tint
+
+        font-display
+        font-semibold
+        no-underline
+        !leading-none
+        whitespace-nowrap
+        text-theme-accent
+
+        hover:bg-theme-accent-tint
+        hover:text-theme-accent-alt
+    ;
+}
+
+
+.twitch-embed {
+    iframe {
+        @apply w-full aspect-video;
+    }
+}

@@ -1,0 +1,73 @@
+[{
+    "value": "single",
+    "label": "No Supporting Content",
+    "tooltips": {
+        "inline": "Only use Primary Copy."
+    },
+    "settings": {},
+    "virtuals": []
+},{
+    "value": "double",
+    "label": "Second Text",
+    "tooltips": {
+        "inline": "Two text blocks, side-by-side."
+    },
+    "settings": {},
+    "virtuals": [{
+        "type" : "select",
+        "name" : "text2layer",
+        "default": "default",
+        "label": "Secondary Copy Format",
+        "instructions": "Typography treatment for the Secondary Copy",
+        "fieldClass": "width-100",
+        "options" : {
+            "default": "Default Text Treatment",
+            "larger" : "Larger Text",
+            "smaller": "Smaller Text",
+            "callout": "Reverse / Knockout Text"
+        }
+    }]
+},{
+    "value": "reveal",
+    "label": "Hidden Reveal",
+    "tooltips": {
+        "inline": "An interactive reveal for secondary content."
+    },
+    "settings": {},
+    "virtuals": [{
+        "type" : "select",
+        "name" : "text2layer",
+        "default": "default",
+        "label": "Secondary Copy Format",
+        "fieldClass": "width-100",
+        "instructions": "Typography treatment for the Secondary Copy",
+        "options" : {
+            "default": "Default Treatment",
+            "boxout" : "Box Knockout"
+        }
+    },{
+        "type" : "text",
+        "name" : "buttontext",
+        "default": "Continue Reading...",
+        "label": "Reveal Button Text"
+    }]
+},{
+    "value": "callout",
+    "label": "Callout",
+    "tooltips": {
+        "inline": "A single text block with an aside."
+    },
+    "settings": {},
+    "virtuals": [{
+        "type" : "select",
+        "name" : "text2layer",
+        "default": "callout",
+        "label": "Callout Format",
+        "instructions": "Typography treatment for the Callout",
+        "options" : {
+            "callout": "Default",
+            "callout__knockout": "Knockout",
+            "callout__quote": "Quote"
+        }
+    }]
+}]
