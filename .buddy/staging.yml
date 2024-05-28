@@ -14,7 +14,7 @@
     - key: "REMOTE_PROJECT_ROOT"
       value: "/home/buildwithburton-g8er3/staging.buildwithburton.com"
     - key: "REMOTE_SSH_HOST"
-      value: "192.53.121.13"
+      value: "192.53.121.135"
     - key: "REMOTE_SSH_USER"
       value: "buildwithburton-g8er3"
 
