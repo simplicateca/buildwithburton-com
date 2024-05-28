@@ -8,15 +8,15 @@
   # pipeline variables
   variables:
     - key: "PROJECT_SHORTNAME"
-      value: ""
+      value: "bwb"
     - key: "PROJECT_URL"
-      value: ""
+      value: "buildwithburton.com"
     - key: "REMOTE_PROJECT_ROOT"
-      value: ""
+      value: "/home/buildwithburton-g8er3/buildwithburton.com"
     - key: "REMOTE_SSH_HOST"
-      value: ""
+      value: "192.53.121.13"
     - key: "REMOTE_SSH_USER"
-      value: ""
+      value: "buildwithburton-g8er3"
 
   # pipeline actions
   actions:
