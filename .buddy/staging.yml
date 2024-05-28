@@ -1,6 +1,6 @@
 # pipeline settings
 - pipeline: "Build & Deploy to Staging"
-  ref_name: "develop"
+  ref_name: "staging"
   ref_type: "BRANCH"
   trigger_mode: "ON_EVERY_PUSH"
   fetch_all_refs: true
